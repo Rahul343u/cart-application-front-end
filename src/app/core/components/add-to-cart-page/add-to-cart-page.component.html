@@ -1,0 +1,72 @@
+<div class="container">
+  <div class="header">
+    <h3 class="main-title">All Items</h3>
+
+    <div class="added-to-cart-message" *ngIf="currentItem">
+      {{ currentItem }} is added to cart
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-primary go-to-cart-button"
+      (click)="goToCart()"
+    >
+      Go to cart
+      <span
+        *ngIf="cartPageData.length > 0"
+        class="badge badge-danger notification-number"
+        >{{ getTotalItems() }}</span
+      >
+    </button>
+  </div>
+
+  <div class="items-section">
+    <div
+      class="item-container"
+      *ngFor="let pItem of addTocartPageData; let i = index"
+    >
+      <div class="off-sticker" *ngIf="pItem.discount > 0">
+        {{ pItem.discount }}% off
+      </div>
+      <div class="img-section">
+        <img
+          class="product-image"
+          [src]="pItem.img_url"
+          alt="BOOK COVER NOT AVAILABLE"
+        />
+
+        <!-- <img
+          class="product-image"
+          src="https://images.homedepot-static.com/productImages/612ae505-9daf-45c3-ac16-67f97dcb251d/svn/globalrose-flower-bouquets-prime-100-red-roses-64_1000.jpg"
+          alt="BOOK COVER NOT AVAILABLE"
+        /> -->
+      </div>
+      <div class="description-section">
+        <div class="item-name">{{ pItem.name }}</div>
+        <div class="item-cost">
+          <span [ngClass]="pItem.discount > 0 ? 'strike' : ''">
+            <span class="actual-cost">{{ pItem.price | currency }}</span>
+          </span>
+
+          <span class="effective-price" *ngIf="pItem.discount > 0">{{
+            pItem.price - (pItem.price * pItem.discount) / 100 | currency
+          }}</span>
+        </div>
+        <BUtton
+          *ngIf="cartPageData.indexOf(pItem) === -1"
+          type="button"
+          class="btn btn-outline-primary add-to-cart-button"
+          (click)="addToCart(pItem)"
+          >Add to cart</BUtton
+        >
+
+        <BUtton
+          *ngIf="cartPageData.indexOf(pItem) > -1"
+          type="button"
+          class="btn btn-outline-secondry add-to-cart-button"
+          >Added to cart</BUtton
+        >
+      </div>
+    </div>
+  </div>
+</div>
