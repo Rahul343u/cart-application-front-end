@@ -10,9 +10,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./add-to-cart-page.component.scss']
 })
 export class AddToCartPageComponent implements OnInit, OnDestroy {
+  //holds data for all cards
   addTocartPageData: Array<Item>;
+
+  //holds data added to cart
   cartPageData: Array<Item> = [];
+
+  //used to display notification item name
   currentItem: string = '';
+
+
   timeoutSubscription: any;
   totalItems: number;
   constructor(
@@ -22,6 +29,8 @@ export class AddToCartPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    // getting data from app state or api
+
     this.addTocartPageData = this.appState.getAddTocartPageData();
     this.cartPageData = this.appState.getCartPageData();
     console.log(this.addTocartPageData);
@@ -33,6 +42,7 @@ export class AddToCartPageComponent implements OnInit, OnDestroy {
     }
   }
 
+  //Add to cart function used to add data to cart
   addToCart(data) {
     this.cartPageData.push(data);
     this.currentItem = data.name;
